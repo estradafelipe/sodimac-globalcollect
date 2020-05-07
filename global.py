@@ -20,10 +20,10 @@ import openpyxl
 # Load dataset
 #url = "C:/Users/feliestrada/Desktop/report.csv"
 names1 = ['MerchantID', 'ContractID',  'OrderID', 'EffortID',  'MerchantReference', 'PaymentReference',  'CustomerID', 'StatusID', 'StatusDescription', 'PaymentProduct ID', 'PaymentProductDescription',  'OrderCountryCode', 'OrderCurrencyCode',  'OrderAmount', 'RequestCurrencyCode',  'RequestAmount', 'PaidCurrency',  'PaidAmount',  'ReceivedDate',  'StatusDate',  'RejectionCode', 'Remarks']
-globalcollect = read_csv(r"C:/Users/feliestrada/Desktop/report (1).csv",header=0 , names=names1, encoding='latin-1', index_col=False)
+globalcollect = read_csv(r"C:/Users/feliestrada/Desktop/report.csv",header=0 , names=names1, encoding='latin-1', index_col=False)
 
 names2 = ['Merchant',  'Orden',  'Suborden', 'F12',  'Tipo Factura', 'Terminal', 'Secuencia',  'Numero De Boleta', 'Canal',  'Fuente Abastecimiento',  'RUT',  'Nombre Cliente', 'Sexo', 'Direccion Cliente',  'Comuna', 'Ciudad', 'Region', 'Pais', 'Codigo Postal',  'Fono Comprador', 'Direccion Despacho', 'Comuna Receptor',  'Ciudad Receptor',  'Region Receptor',  'Pais Receptor',  'Cod. Postal Recep.', 'Fono Receptor',  'Metodo Envio', 'Codigo Linea', 'Descripcion Linea',  'Codigo Sublinea',  'Descripcion Sublinea', 'Codigo Clase', 'Descripcion Clase',  'Codigo Subclase',  'Descripcion Subclase', 'SKU',  'Descripcion SKU',  'Tamano', 'Regalo', 'Medio De Pago',  'Banco',  'Numero De Tarjeta',  'Numero Cuotas',  'Cantidad', 'Codigo Subclase2',  'Descripcion Subclase2', 'Fecha Coloc Orden',  'Hora Coloc Orden', 'Fecha Entrega Orden',  'Fecha Reparto',  'Fecha Pactada',  'Fecha Picking',  'Fecha Ruta', 'Fecha Validacion', 'Fecha Boleta', 'Estado ASL', 'Fec. Cambio Estado', 'Retencion Novios', 'Codigo Vendedor',  'Nombre Vendedor',  'Email',  'Precio Con Rebaja',  'Precio', 'Valor Flete',  'Total',  'Bulto',  'CodigoAutorizacion',  'OC Agrupada PF', 'Hora Validacion',  'Hora Boleta']
-asl = read_csv(r"C:/Users/feliestrada/Desktop/InfVtasAcum_WEB (3).csv", delimiter=';',header=0, names=names2, encoding='latin-1')
+asl = read_csv(r"C:/Users/feliestrada/Desktop/InfVtasAcum_WEB.csv", delimiter=';',header=0, names=names2, encoding='latin-1')
 
 print("Globalcollect:")
 # shape
@@ -47,4 +47,4 @@ print(cruceOrdenado.shape)
 print(cruceOrdenado.head(35))
 
 
-cruceOrdenado.to_excel("cruce_soar.xlsx","cruce")
+cruceOrdenado.to_excel("cruce_soar2.xlsx","cruce")
