@@ -48,3 +48,6 @@ print(cruceOrdenado.head(35))
 
 
 cruceOrdenado.to_excel("cruce_soar2.xlsx","cruce")
+
+
+
