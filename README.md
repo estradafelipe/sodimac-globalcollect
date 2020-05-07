@@ -8,6 +8,7 @@ Realiza el cruce entra ASL y Globalcollect y detecta las transacciones que estan
 Ejecución:
 
 Tener instalado Python 3.0 o superior - https://www.python.org/downloads/
+
 Instalar la libreria Pandas, openpyxl y tkinter
   - en la consola de windows poner:
       - pip install pandas
