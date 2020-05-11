@@ -1,8 +1,12 @@
 # Load libraries
 from pandas import read_csv
+from pandas import to_datetime
 import openpyxl
 import tkinter as tk
 from tkinter import filedialog
+from datetime import datetime, date, time, timedelta
+import calendar
+from PIL import Image
 
 
 asl_path = " "
@@ -11,7 +15,7 @@ global_path = " "
 #Genero pop up para obtener la ruta de los archivos de ASL y global
 root= tk.Tk()
 
-popup = tk.Canvas(root, width = 300, height = 300, bg = 'white', relief = 'raised')
+popup = tk.Canvas(root, width = 450, height = 400, bg = 'white', relief = 'raised')
 popup.pack()
 
 #Obtiene la ruta del archivo de ASL
@@ -19,6 +23,7 @@ def getCSVASL ():
   global asl_path
   asl_path = filedialog.askopenfilename()
   #asl_path = import_file_path
+  okASL()
   print(asl_path)
 
 #Obtiene la ruta del archivo de Globalcollect
@@ -26,7 +31,14 @@ def getCSVGlobal ():
   global global_path
   global_path = filedialog.askopenfilename()
   #global_path = import_file_path
+  okGlobal()
   print(global_path)
+
+def okASL():
+    label_asl.config(text='OK', bg="green")
+
+def okGlobal():
+    label_global.config(text='OK', bg="green")
 
 #Ejecuta el cruce
 def ejecutarCruce():
@@ -62,24 +74,63 @@ def ejecutarCruce():
 
   #Ordeno por fecha
   cruceOrdenado = cruce2.sort_values(by='ReceivedDate')
-  print("Cruce: ")
-  print(cruceOrdenado.shape)
-  print(cruceOrdenado.head(35))
-  #Genero export en excel
-  cruceOrdenado.to_excel("cruce_soar.xlsx","cruce")
 
-  exit()
+  cruceOrdenado['fechaArg'] = cruceOrdenado['ReceivedDate']
+
+  print(cruceOrdenado.dtypes)
+
+  cruceOrdenadoFecha = cruceOrdenado.apply(lambda x: to_datetime(x) if x.name == 'fechaArg' else x)
+  cruceFechaArg = cruceOrdenadoFecha.apply(lambda x: x - timedelta(hours=5) if x.name == 'fechaArg' else x)
+
+  print("Cruce: ")
+  print(cruceFechaArg.shape)
+  print(cruceFechaArg.head(35))
+  #Genero export en excel
+  cruceFechaArg.to_excel("cruce_soar.xlsx","cruce")
+
+  return(0)
+
+
+label_asl = tk.Label(text='-',bg='red', fg='black', font=('helvetica', 12, 'bold'))
+label_global = tk.Label(text='-',bg='red', fg='black', font=('helvetica', 12, 'bold'))
 
 #Boton ruta asl
-buttonAsl_csv = tk.Button(text="Import ASL CSV File", command=getCSVASL, bg='green', fg='white', font=('helvetica', 12, 'bold'))
+imagenASL = tk.PhotoImage(file="buttonASL.png")
+buttonAsl_csv = tk.Button(text="Importar archivo de ASL", command=getCSVASL, bg='white', fg='white', font=('helvetica', 12, 'bold'),image=imagenASL, border=0)
 #Boton ruta global
-buttonGlobal_csv = tk.Button(text="Import GLOBAL CSV File", command=getCSVGlobal, bg='green', fg='white', font=('helvetica', 12, 'bold'))
+imagenGlobal = tk.PhotoImage(file="buttonGlobal.png")
+buttonGlobal_csv = tk.Button(text="Importar archivo de GLOBALCOLLECT", command=getCSVGlobal, bg='white', fg='white', font=('helvetica', 12, 'bold'),image=imagenGlobal, border=0)
 #Boton cruce
-buttonCruce = tk.Button(text="Generar cruce", command=ejecutarCruce, bg='red', fg='white', font=('helvetica', 12, 'bold'))
+imagenCruce = tk.PhotoImage(file="buttonCruce.png")
+buttonCruce = tk.Button(text="Generar cruce", command=ejecutarCruce, bg='white', fg='white', font=('helvetica', 12, 'bold'),image=imagenCruce, border=0)
 
-popup.create_window(150, 60, window=buttonAsl_csv)
-popup.create_window(150, 100, window=buttonGlobal_csv)
-popup.create_window(150, 160, window=buttonCruce)
+
+
+
+
+imagenBypipe = Image.open('bypipeok.png')
+new_image = imagenBypipe.resize((163, 30))
+new_image.save('bypipeoksize.png')
+imagenBypipeok = tk.PhotoImage(file="bypipeoksize.png")
+
+byPipe = tk.Label(text='Compiled by Pipe',bg='white', fg='black', font=('helvetica', 12, 'bold'), image=imagenBypipeok)
+
+muerte = Image.open('muerte.png')
+new_muerte = muerte.resize((100, 50))
+new_muerte.save('muerteoksize.png')
+muerteok = tk.PhotoImage(file="muerteoksize.png")
+
+muerte_label = tk.Label(bg='white', fg='black', image=muerteok)
+
+popup.create_window(200, 60, window=buttonAsl_csv)
+popup.create_window(200, 130, window=buttonGlobal_csv)
+popup.create_window(200, 250, window=buttonCruce)
+
+popup.create_window(400, 60, window=label_asl)
+popup.create_window(400, 130, window=label_global)
+
+popup.create_window(300,380, window=byPipe)
+popup.create_window(100,380, window=muerte_label)
 
 root.mainloop()
 
