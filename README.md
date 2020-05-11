@@ -9,11 +9,12 @@ Realiza el cruce entra ASL y Globalcollect y detecta las transacciones que estan
 # Por consola:
 Tener instalado Python 3.0 o superior - https://www.python.org/downloads/
 
-Instalar la libreria Pandas, openpyxl y tkinter
+Instalar la libreria Pandas, openpyxl, tkinter y pillow
   - En la consola de windows poner:
       - pip install pandas
       - pip install openpyxl
       - pip install tkinter
+      - pip install pillow
 
 Para ejecutar en la consola ir hasta la ruta del archivo global.py
 
