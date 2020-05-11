@@ -6,11 +6,6 @@ Realiza el cruce entra ASL y Globalcollect y detecta las transacciones que estan
 
 
 # Ejecución:
-Hay dos opciones para ejecutarlo: mediante el ejecutable (en la carpeta dist) o por consola.
-
-# Ejecutable
-Ejecutar el exe que se encuentra en la carpeta dist
-
 # Por consola:
 Tener instalado Python 3.0 o superior - https://www.python.org/downloads/
 
