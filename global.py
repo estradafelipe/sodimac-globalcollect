@@ -35,10 +35,10 @@ def getCSVGlobal ():
   print(global_path)
 
 def okASL():
-    label_asl.config(text='OK', bg="green")
+    label_asl.config(text='OK', fg="green")
 
 def okGlobal():
-    label_global.config(text='OK', bg="green")
+    label_global.config(text='OK', fg="green")
 
 #Ejecuta el cruce
 def ejecutarCruce():
@@ -74,14 +74,13 @@ def ejecutarCruce():
 
   #Ordeno por fecha
   cruceOrdenado = cruce2.sort_values(by='ReceivedDate')
-
+  #agrego columna de fecha con hora argentina (ya que la hora de global es de holanda)
   cruceOrdenado['fechaArg'] = cruceOrdenado['ReceivedDate']
-
-  print(cruceOrdenado.dtypes)
-
+  #convierto la fecha de global a la fecha argentina
   cruceOrdenadoFecha = cruceOrdenado.apply(lambda x: to_datetime(x) if x.name == 'fechaArg' else x)
   cruceFechaArg = cruceOrdenadoFecha.apply(lambda x: x - timedelta(hours=5) if x.name == 'fechaArg' else x)
 
+  #imprimo una muestra del cruce para validar en la consola
   print("Cruce: ")
   print(cruceFechaArg.shape)
   print(cruceFechaArg.head(35))
@@ -90,9 +89,11 @@ def ejecutarCruce():
 
   return(0)
 
+#Defino los botones y labels de la ventana
 
-label_asl = tk.Label(text='-',bg='red', fg='black', font=('helvetica', 12, 'bold'))
-label_global = tk.Label(text='-',bg='red', fg='black', font=('helvetica', 12, 'bold'))
+#labels de estado de carga del archivo (- si no lo cargó y OK si ya lo cargó)
+label_asl = tk.Label(text='-',bg='white', fg='red', font=('helvetica', 12, 'bold'))
+label_global = tk.Label(text='-',bg='white', fg='red', font=('helvetica', 12, 'bold'))
 
 #Boton ruta asl
 imagenASL = tk.PhotoImage(file="buttonASL.png")
@@ -105,21 +106,11 @@ imagenCruce = tk.PhotoImage(file="buttonCruce.png")
 buttonCruce = tk.Button(text="Generar cruce", command=ejecutarCruce, bg='white', fg='white', font=('helvetica', 12, 'bold'),image=imagenCruce, border=0)
 
 
-
-
-
-imagenBypipe = Image.open('bypipeok.png')
-new_image = imagenBypipe.resize((163, 30))
-new_image.save('bypipeoksize.png')
+#Mi logo :)
 imagenBypipeok = tk.PhotoImage(file="bypipeoksize.png")
-
 byPipe = tk.Label(text='Compiled by Pipe',bg='white', fg='black', font=('helvetica', 12, 'bold'), image=imagenBypipeok)
 
-muerte = Image.open('muerte.png')
-new_muerte = muerte.resize((100, 50))
-new_muerte.save('muerteoksize.png')
 muerteok = tk.PhotoImage(file="muerteoksize.png")
-
 muerte_label = tk.Label(bg='white', fg='black', image=muerteok)
 
 popup.create_window(200, 60, window=buttonAsl_csv)
@@ -129,7 +120,7 @@ popup.create_window(200, 250, window=buttonCruce)
 popup.create_window(400, 60, window=label_asl)
 popup.create_window(400, 130, window=label_global)
 
-popup.create_window(300,380, window=byPipe)
+popup.create_window(350,380, window=byPipe)
 popup.create_window(100,380, window=muerte_label)
 
 root.mainloop()
